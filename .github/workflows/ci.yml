@@ -1,0 +1,20 @@
+name: ci
+
+on: ["push", "pull_request", "workflow_dispatch"]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Task
+        uses: arduino/setup-task@v1
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - run: pnpm install
+      - run: pnpm install -g @aptos-labs/aptos-cli
+      - run: aptos -V
+      - run: cp .env.example .env
+      - run: task demo

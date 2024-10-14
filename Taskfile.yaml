@@ -1,0 +1,26 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - aptos move compile --named-addresses MovernancePad=default
+    sources:
+      - ./sources/**/*.move
+  test:
+    cmds:
+      - aptos move test --named-addresses MovernancePad=default -f LaunchpadV2
+    sources:
+      - ./sources/**/*.move
+  publish:
+    cmds:
+#      - aptos move publish --named-addresses MovernancePad=default
+      - aptos move deploy-object --address-name MovernancePad --assume-yes
+    sources:
+      - ./sources/**/*.move
+  demo:
+    cmds:
+      - pnpm run demo
+    sources:
+      - ./src/**/*.ts
